@@ -1,0 +1,14 @@
+bin/
+
+.*
+!.git*
+
+*.elf
+*.so
+*.a
+*.bin
+*.log
+
+/map
+
+Session.vim
