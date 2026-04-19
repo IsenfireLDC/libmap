@@ -39,7 +39,8 @@ clean:
 	@rm -f $(FILES.BIN) $(FILES.DEP) $(PROJ.EXEC) $(PROJ.LIBSH)
 
 update:
-	@cp -vut /home/icenfire/projects/Software/bin $(PROJ.EXEC) $(PROJ.LIBSH)
+	@#cp -vut /home/icenfire/projects/Software/bin $(PROJ.EXEC)
+	@cp -vut /home/icenfire/projects/Software/lib $(PROJ.LIBSH)
 	@cp -vurt /home/icenfire/projects/Software/include $(DIR.INC)/*
 
 
