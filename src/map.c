@@ -42,6 +42,7 @@ void map_clear(Map *this) {
 			MapNode *next = node->next;
 
 			destroyNode(node);
+			free(node);
 
 			node = next;
 		};
@@ -142,7 +143,7 @@ void* map_allocate(Map *restrict this, const void *restrict key, size_t keySize,
 		if(this->size > this->buckets * this->maxLoad) map_rehash(this, this->buckets << 1);
 	};
 
-	return *nodeRef;
+	return (*nodeRef)->value;
 };
 
 
