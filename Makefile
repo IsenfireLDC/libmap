@@ -6,7 +6,8 @@ FILES.SRC:=$(shell if [ -d $(DIR.SRC) ]; then find $(DIR.SRC) -name '*.c' -type 
 FILES.BIN:=$(patsubst $(DIR.SRC)/%.c,$(DIR.BIN)/%.c.o,$(FILES.SRC))
 FILES.DEP:=$(FILES.BIN:.o=.d)
 
-FILES.BIN.LIB:=$(patsubst $(DIR.SRC)/%.c,$(DIR.BIN)/%.c.so,$(FILES.SRC))
+# Filter out main from library files
+FILES.BIN.LIB:=$(patsubst $(DIR.SRC)/%.c,$(DIR.BIN)/%.c.so,$(filter-out %/main.c,$(FILES.SRC)))
 FILES.DEP.LIB:=$(FILES.BIN.LIB:.o=.d)
 
 PROJ.EXEC:=$(DIR.OUT)/$(PROJ.NAME)
@@ -53,7 +54,7 @@ $(PROJ.EXEC): $(FILES.BIN)
 	gcc -MP -MMD -o $@ $^ $(FLAGS) $(FLAGS.EXEC) $(FLAGS.LIBS)
 
 $(PROJ.LIBSH): $(FILES.BIN.LIB)
-	gcc -MP -MMD -o $@ $^ $(FLAGS) $(FLAGS.LIBSH) $(FLAGS.LIBS)
+	gcc -MP -MMD -shared -o $@ $^ $(FLAGS) $(FLAGS.LIBSH) $(FLAGS.LIBS)
 
 # Add the target directory as a prerequisite when building
 .SECONDEXPANSION:
