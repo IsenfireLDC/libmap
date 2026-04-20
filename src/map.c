@@ -152,7 +152,7 @@ bool map_contains(const Map *restrict this, const void *restrict key, size_t key
 	map_hash_t hash = this->hash(key, keySize);
 	MapNode **nodeRef = findNodeRef(this, hash, key, keySize);
 
-	return !nodeRef;
+	return ! !nodeRef;
 };
 
 
