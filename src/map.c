@@ -57,7 +57,9 @@ void map_rehash(Map *this, size_t buckets) {
 	MapNode **data = this->data;
 	this->data = calloc(buckets, sizeof(MapNode*));
 
-	for(size_t i = 0; i < this->buckets; ++i) {
+	size_t oldBuckets = this->buckets;
+	this->buckets = buckets;
+	for(size_t i = 0; i < oldBuckets; ++i) {
 		MapNode *node = data[i];
 
 		while(node) {
@@ -72,8 +74,6 @@ void map_rehash(Map *this, size_t buckets) {
 	};
 
 	free(data);
-
-	this->buckets = buckets;
 };
 
 
