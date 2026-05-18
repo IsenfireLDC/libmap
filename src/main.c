@@ -35,7 +35,13 @@ int main(void) {
 	if(!map_get(&map, map_dGeneral(testV), str, strLen)) fprintf(stderr, "Failed to read by int key\n");
 	printf("Loaded string value '%s' from map\n", str);
 
-	printf("Rehash\n");
+	printf("Triggering auto rehash\n");
+	for(int i = 0; i < 8; ++i) {
+		int iPP = i + 1;
+		map_insert(&map, map_dGeneral(i), map_dGeneral(iPP));
+	};
+
+	printf("Manual rehash\n");
 	map_rehash(&map, 32);
 	printf("Full dump:\n");
 	map_foreach(&map, mi_displayPairs, NULL);
