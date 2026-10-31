@@ -66,5 +66,6 @@ bool map_eq(const void *restrict, size_t, const void *restrict, size_t);
 #include <string.h>
 #define map_dString(s) (s), (strlen(s)+1)
 #define map_dGeneral(g) &(g), sizeof(g)
+#define map_dNULL NULL, 0
 
 #endif
