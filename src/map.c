@@ -247,7 +247,7 @@ static void createNode(
 	node->next = NULL;
 	node->key = malloc(keySize);
 	node->keySize = keySize;
-	node->value = value ? malloc(valueSize) : NULL;
+	node->value = valueSize ? malloc(valueSize) : NULL;
 	node->valueSize = valueSize;
 
 	memcpy((void*)node->key, key, keySize);
