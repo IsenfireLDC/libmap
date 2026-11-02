@@ -34,6 +34,16 @@ void map_destroy(Map *this) {
 
 
 
+void map_swap(Map *this, Map *other) {
+	if(!this || !other) return;
+
+	Map temp = *this;
+	memcpy(this, other, sizeof(*this));
+	memcpy(other, &temp, sizeof(*this));
+};
+
+
+
 void map_clear(Map *this) {
 	for(size_t i = 0; i < this->buckets; ++i) {
 		MapNode *node = this->data[i];

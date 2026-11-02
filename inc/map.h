@@ -38,6 +38,8 @@ typedef struct Map {
 void map_create(Map*, MapHash, MapEq);
 void map_destroy(Map*);
 
+void map_swap(Map*, Map*);
+
 void map_clear(Map*);
 void map_rehash(Map*, size_t);
 
