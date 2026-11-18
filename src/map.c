@@ -288,8 +288,9 @@ static bool keyEqual(
 	if(!node) return false;
 	if(node->hash != hash) return false;
 
-	// Pointers differ and ( one is null or contents differ )
-	if(node->key != key && (!node->key || !key || !this->eq(node->key, node->keySize, key, keySize))) return false;
+	// Pointer null-ness or contents differ
+	if(!node->key != !key) return false;
+	if(node->key && !this->eq(node->key, node->keySize, key, keySize)) return false;
 
 	return true;
 };
