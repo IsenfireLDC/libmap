@@ -131,6 +131,7 @@ void map_erase(Map *restrict this, const void *restrict key, size_t keySize) {
 void* map_allocate(Map *restrict this, const void *restrict key, size_t keySize, size_t valueSize) {
 	map_hash_t hash = this->hash(key, keySize);
 
+	MapNode *node;
 	MapNode **nodeRef = findNodeRef(this, hash, key, keySize);
 	if(nodeRef) {
 		if((*nodeRef)->valueSize != valueSize) {
@@ -142,6 +143,8 @@ void* map_allocate(Map *restrict this, const void *restrict key, size_t keySize,
 
 			(*nodeRef)->next = next;
 		}
+
+		node = *nodeRef;
 	} else {
 		// Create new entry
 		nodeRef = findInsertionPoint(this, hash);
@@ -149,11 +152,14 @@ void* map_allocate(Map *restrict this, const void *restrict key, size_t keySize,
 		*nodeRef = malloc(sizeof(MapNode));
 		createNode(*nodeRef, hash, key, keySize, NULL, valueSize);
 
+		// Save pointer in case we need to rehash
+		node = *nodeRef;
+
 		++this->size;
 		if(this->size > this->buckets * this->maxLoad) map_rehash(this, this->buckets << 1);
 	};
 
-	return (*nodeRef)->value;
+	return node->value;
 };
 
 
