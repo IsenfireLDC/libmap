@@ -233,13 +233,12 @@ map_hash_t map_hash(const void *data, size_t size) {
 };
 
 map_hash_t map_hashNext(map_hash_t hash, const void *data, size_t size) {
-	const uint32_t *d32 = data;
 	for(size_t i = 0; i < size; i += 4) {
 		uint32_t chunk = 0;
 		if(size - i < 4) {
-			memcpy(&chunk, d32, size - i);
+			memcpy(&chunk, data + i, size - i);
 		} else {
-			chunk = *d32++;
+			memcpy(&chunk, data + i, 4);
 		};
 
 		hash ^= chunk;
