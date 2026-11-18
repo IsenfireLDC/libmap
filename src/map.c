@@ -96,8 +96,10 @@ void map_insert(Map *restrict this, const void *restrict key, size_t keySize, co
 		// Update existing entry
 		MapNode *next = (*nodeRef)->next;
 
-		destroyNode(*nodeRef);
+		// Save first to allow overwrite using existing key/value pointer
+		MapNode node = **nodeRef;
 		createNode(*nodeRef, hash, key, keySize, value, valueSize);
+		destroyNode(&node);
 
 		(*nodeRef)->next = next;
 	} else {
@@ -138,8 +140,10 @@ void* map_allocate(Map *restrict this, const void *restrict key, size_t keySize,
 			// Update existing entry
 			MapNode *next = (*nodeRef)->next;
 
-			destroyNode(*nodeRef);
+			// Save first to allow overwrite using existing key/value pointer
+			MapNode node = **nodeRef;
 			createNode(*nodeRef, hash, key, keySize, NULL, valueSize);
+			destroyNode(&node);
 
 			(*nodeRef)->next = next;
 		}
